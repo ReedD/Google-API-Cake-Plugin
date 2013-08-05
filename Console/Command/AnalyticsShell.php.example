@@ -1,0 +1,69 @@
+<?php
+
+App::uses('CakeEmail', 'Network/Email');
+App::uses('CakeTime', 'Utility');
+
+class AnalyticsShell extends AppShell {
+
+/**
+ * Models
+ *
+ * @var array
+ */
+	public $uses = array(
+		'Article'
+	);
+
+	public $tasks = array(
+		'GoogleApi.Analytics'
+	);
+
+/**
+ * Start up the Shell
+ *
+ * @return void
+ */
+	public function startUp() {
+
+	}
+
+/**
+ * Run this cron to cache view count from analytics
+ *
+ * @return void
+ */
+	public function cacheViews() {
+
+		// Query analytics data
+		$results = $this->Analytics->query(array(
+			'start-date' => '2013-01-01',
+			'metrics' => 'ga:pageviews',
+			'dimensions' => 'ga:pagePath',
+			// We're matching pagePath against a regular expression
+			// All article slug paths are in the following format /:type-:slug
+			// i.e. /article-analytics-plugin or /gallery-vacation-photos
+			'filters' => 'ga:pagePath=~/(article|gallery|video)-'
+		));
+
+		$hashTable = array();
+		// Setup a hash table for path => views
+		// i.e. array(
+		// 		'/gallery-vacation-photos' => 10
+		// )
+		foreach ($results as $key => $value) {
+			$hashTable[$value['ga:pagePath']] = $value['ga:pageviews'];
+		}
+
+		$articles = $this->Article->find('all', array(
+			'fields' => array('id', 'path')
+		));
+
+		foreach ($articles as &$article) {
+			if (!isset($hashTable[$article['Article']['path']])) continue;
+			$article['Article']['views'] = $hashTable[$article['Article']['path']];
+		}
+
+		$this->Article->saveMany($articles);
+	}
+
+}
