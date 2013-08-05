@@ -1,15 +1,17 @@
 <?php
+
 define('GOOGLE_KEY_FILE', APP . DS . 'Config' . DS . 'googlekey.p12');
 App::import('Vendor', 'GoogleApi.Google_Client', array('file' => 'Google' . DS . 'Google_Client.php'));
 App::import('Vendor', 'GoogleApi.Google_AnalyticsService', array('file' => 'Google' . DS . 'contrib' . DS . 'Google_AnalyticsService.php'));
 App::uses('Component', 'Controller');
-class AnalyticsComponent extends Component {
+
+class AnalyticsTask extends Shell {
 
 	public $service = null;
 	public $client = null;
 	public $id = null;
 
-	public function startup() {
+	function __construct () {
 		$this->id = sprintf('ga:%d', GOOGLE_ANALYTICS_ACCOUNT_ID);
 		$this->client = new Google_Client();
 		$this->client->setApplicationName('Google API Cake Plugin');
@@ -92,24 +94,5 @@ class AnalyticsComponent extends Component {
 			}
 		}
 		return $formattedResult;
-	}
-
-	public function test () {
-		if ($this->token) {
-			$props = $this->service->management_webproperties->listManagementWebproperties("~all");
-			print "<h1>Web Properties</h1><pre>" . print_r($props, true) . "</pre>";
-
-			$accounts = $this->service->management_accounts->listManagementAccounts();
-			print "<h1>Accounts</h1><pre>" . print_r($accounts, true) . "</pre>";
-
-			$segments = $this->service->management_segments->listManagementSegments();
-			print "<h1>Segments</h1><pre>" . print_r($segments, true) . "</pre>";
-
-			$goals = $this->service->management_goals->listManagementGoals("~all", "~all", "~all");
-			print "<h1>Segments</h1><pre>" . print_r($goals, true) . "</pre>";
-		} else {
-			print 'Error';
-		}
-		die;
 	}
 }
