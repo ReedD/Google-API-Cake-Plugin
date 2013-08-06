@@ -1,4 +1,11 @@
 <?php
+//
+//  AnalyticsTask.php
+//  Google API Cake Plugin
+//
+//  Created by Reed Dadoune <Reed@Dadoune.com> on 8/1/13.
+//  Copyright (c) 2013 Reed Dadoune. All rights reserved.
+//
 
 define('GOOGLE_KEY_FILE', APP . DS . 'Config' . DS . 'googlekey.p12');
 App::import('Vendor', 'GoogleApi.Google_Client', array('file' => 'Google' . DS . 'Google_Client.php'));
