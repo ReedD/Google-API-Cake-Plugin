@@ -1,4 +1,11 @@
 <?php
+//
+//  AnalyticsTaskShell.php.example
+//  Google API Cake Plugin
+//
+//  Created by Reed Dadoune <Reed@Dadoune.com> on 8/1/13.
+//  Copyright (c) 2013 Reed Dadoune. All rights reserved.
+//
 
 App::uses('CakeEmail', 'Network/Email');
 App::uses('CakeTime', 'Utility');

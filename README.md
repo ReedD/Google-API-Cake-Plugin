@@ -17,7 +17,7 @@ Currently I've only build in support for Google Analytics but you could easily m
 	the **GOOGLE_SERVICE_ACCOUNT_NAME** as a user within your analytics account so we can get access to
 	the profile
 7. More information can be found at Google API Reference [Documentation](https://developers.google.com/analytics/devguides/reporting/core/v3/reference "Google API Reference")
-	
+
 
 ## Cake Setup ##
 
@@ -26,5 +26,5 @@ Currently I've only build in support for Google Analytics but you could easily m
 		define('GOOGLE_ANALYTICS_ACCOUNT_ID', 'XXXXXXX');
 		define('GOOGLE_CLIENT_ID', 'Client ID');
 		define('GOOGLE_SERVICE_ACCOUNT_NAME', 'Email Address');
-		
+
 2. You can then add shell scripts to periodically (on a cronjob) cache data from google analytics via shell command.  An example can be seen here `Console/Command/AnalyticsShell.php.example`, demonstrating how you might update a model view count based on it's path/slug.
