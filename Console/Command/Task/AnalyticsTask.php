@@ -74,12 +74,16 @@ class AnalyticsTask extends Shell {
 			'end-date' => date('Y-m-d'),
 			'metrics' => null,
 			'dimensions' => null,
-			'filters' => null
+			'filters' => null,
+			'start-index' => 1,
+			'max-results' => 1000
 		);
 		$params = array_merge($params, $opts);
 		$optional = array_filter(array(
 			'filters' => $params['filters'],
-			'dimensions' => $params['dimensions']
+			'dimensions' => $params['dimensions'],
+			'start-index' => $params['start-index'],
+			'max-results' => $params['max-results']
 		));
 
 		$result = $this->service->data_ga->get(
